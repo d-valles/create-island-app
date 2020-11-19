@@ -1,4 +1,5 @@
 import './App.css';
+import "bulma/css/bulma.css"
 import Grid from './components/Grid/Grid'
 
 function App() {
