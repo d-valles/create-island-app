@@ -12,6 +12,7 @@ export default class Grid extends React.Component {
 
     this.handleMouseDown = this.handleMouseDown.bind(this);
     this.handleMouseUp = this.handleMouseUp.bind(this);
+    this.updateAndNotify = this.updateAndNotify.bind(this);
   }
 
   componentDidMount() {
@@ -21,14 +22,26 @@ export default class Grid extends React.Component {
     })
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.gridHeight !== this.props.gridHeight
+        || prevProps.gridWidth !== this.props.gridWidth) {
+        this.updateAndNotify();
+    }
+  }
+
+  updateAndNotify = () => {
+    const initialGrid = this.generateGrid();
+    this.setState({
+      grid: initialGrid
+    })
+  }
+
   generateGrid() {
-    // TODO generate with props 
+    const { gridHeight, gridWidth } = this.props;
     let initialGrid = [];
-    let height = 10;
-    let width = 10;
-    for (let row = 0; row < height; row++) {
+    for (let row = 0; row < gridHeight; row++) {
       let initRow = [];
-      for (let col = 0; col < width; col++) {
+      for (let col = 0; col < gridWidth; col++) {
         initRow.push({
           isEmpty: true,
           col,
@@ -72,6 +85,9 @@ export default class Grid extends React.Component {
     const { grid } = this.state;
     return (
       <div className="grid-container">
+        <div className="title">
+          My World
+        </div>
         <div className="grid"> 
         {
           grid.map((row, rowId) => {

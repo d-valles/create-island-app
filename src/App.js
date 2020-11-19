@@ -1,11 +1,11 @@
 import './App.css';
-import "bulma/css/bulma.css"
-import Grid from './components/Grid/Grid'
+import 'bulma/css/bulma.css'
+import IslandGame from './components/IslandGame/IslandGame';
 
 function App() {
   return (
     <div className="App">
-      <Grid></Grid>
+      <IslandGame></IslandGame>
     </div>
   );
 }
