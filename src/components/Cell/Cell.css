@@ -1,0 +1,14 @@
+.cell {
+  width: 25px;
+  height: 25px;
+  outline: 1px solid white;
+  display: inline-block;
+}
+
+.cell-land {
+  background-color: #51702c
+}
+
+.cell-water {
+  background-color: #3d969e
+}
