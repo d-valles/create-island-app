@@ -1,25 +1,21 @@
 import React from 'react'
-import { Button, Card, InputNumber, Progress, Space } from 'antd'
+import { Button,
+  Col,
+  Card,
+  Divider, 
+  Layout, 
+  InputNumber,
+  Progress, 
+  Row,
+  Space,
+  Typography } from 'antd'
 import Grid from '../Grid/Grid'
+import { count } from "../../lib/algorithms"
 
-function Header() {
-  return (
-    <section className="hero">
-      <div className="hero-body">
-        <div className="container">
-          <h1 className="title">
-            Tiny world
-          </h1>
-          <h2 className="subtitle">
-            Built with React and AntDesign
-          </h2>
-        </div>
-      </div>
-    </section>
-  )
-}
+const { Header, Footer, Content } = Layout;
+const { Title } = Typography;
 
-function Stats({ numOfIsland, numOfLand, numOfWater}) {
+function Stats({ OnUpdate, numOfIsland, numOfLand, numOfWater}) {
   return (
     <Card title="Stats">
       <Space>
@@ -48,6 +44,8 @@ function Stats({ numOfIsland, numOfLand, numOfWater}) {
           format={percent => `${percent} Islands`}>
         </Progress>
       </Space>
+      <Divider />
+      <Button type="primary" onClick={OnUpdate}>Count</Button>
     </Card>
   )
 }
@@ -112,14 +110,41 @@ export default class IslandGame extends React.Component {
     super(props)
 
     this.state = {
-      numOfWater: 0,
-      numOfLand: 0,
-      numOfIsland: 0,
+      grid: [],
+      numOfWater: 5,
+      numOfLand: 10,
+      numOfIsland: 5,
       gridHeight: 10,
       gridWidth: 10,
     }
 
     this.handleGridChanges = this.handleGridChanges.bind(this);
+    this.handleStatsChange = this.handleStatsChange.bind(this);
+  }
+
+  componentDidMount() {
+    const initialGrid = this.generateGrid();
+    this.setState({
+      grid: initialGrid
+    })
+  }
+
+  generateGrid() {
+    const { gridHeight, gridWidth } = this.state;
+    let initialGrid = [];
+    for (let row = 0; row < gridHeight; row++) {
+      let initRow = [];
+      for (let col = 0; col < gridWidth; col++) {
+        initRow.push({
+          isEmpty: true,
+          col,
+          row,
+        })
+      }
+      initialGrid.push(initRow);
+    }
+
+    return initialGrid;
   }
 
   handleGridChanges(height, width) {
@@ -129,35 +154,58 @@ export default class IslandGame extends React.Component {
     })
   }
 
+  handleStatsChange() {
+    const { numOfEmpty, numOfFill } = count(this.state.grid.slice());
+    this.setState({
+      numOfLand: numOfFill,
+      numOfWater: numOfEmpty,
+      numOfIsland: 0,
+    })
+   }
+  
+   handleGridChange(newGrid) {
+     this.setState({
+       grid: newGrid
+     })
+   }
+
   render() {
     const { gridHeight, gridWidth, numOfIsland, numOfWater, numOfLand } = this.state;
 
     return (
-      <div className="container">
-        <Header></Header>
-        <div className="columns">
-          <div className="column">
+      <Layout className="layout">
+      <Header>
+        <div className="logo" />
+        <Title level={3}>Tiny World</Title>
+      </Header>
+      <Content style={{ padding: '0 50px' }}>
+        <Row>
+          <Col flex="auto">
             <Grid
+              onChange={(grid) => this.handleGridChange(grid)}
               gridHeight={gridHeight}
               gridWidth={gridWidth}>
             </Grid>
-          </div>
-          <div className="column">
+          </Col>
+          <Col flex="none">
             <Space direction="vertical">
-              <Stats
-                numOfIsland={numOfIsland}
-                numOfLand={numOfLand}
-                numOfWater={numOfWater}
+                <Stats
+                  numOfIsland={numOfIsland}
+                  numOfLand={numOfLand}
+                  numOfWater={numOfWater}
+                  OnUpdate={() => this.handleStatsChange()}
+                  >
+                </Stats>
+                <Controls
+                  OnUpdate={(height, width) => this.handleGridChanges(height, width)}
                 >
-              </Stats>
-              <Controls
-                OnUpdate={(height, width) => this.handleGridChanges(height, width)}
-              >
-              </Controls>
+                </Controls>
             </Space>
-          </div>
-        </div>
-      </div>
+          </Col>
+        </Row>
+      </Content>
+      <Footer style={{ textAlign: 'center' }}>Built with React and AntDesign</Footer>
+      </Layout>
     )
   }
 }
