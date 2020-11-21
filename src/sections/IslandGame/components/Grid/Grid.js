@@ -1,6 +1,6 @@
 import React from 'react'
 import { Typography } from 'antd';
-import Cell from '../Cell/Cell.js'
+import Cell from './components/Cell/Cell'
 import './Grid.css'
 
 const { Title } = Typography;
@@ -89,7 +89,7 @@ export default class Grid extends React.Component {
     const { grid } = this.state;
     return (
       <div className="grid-container">
-        <Title level={3}>Map</Title>
+        <Title level={4}>Map</Title>
         <div className="grid"> 
         {
           grid.map((row, rowId) => {

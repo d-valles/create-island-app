@@ -1,0 +1,65 @@
+.cell {
+  width: 25px;
+  height: 25px;
+  outline: 1px solid white;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.cell-land {
+  background-color: #87d068;
+  animation-name: waterToLand;
+  animation-duration: 1.5s;
+  animation-timing-function: ease-in-out;
+  animation-delay: 0;
+  animation-direction: alternate;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+}
+
+.cell-water {
+  background-color: #108ee9;
+  animation-name: landToWater;
+  animation-duration: 1.5s;
+  animation-timing-function: ease-in-out;
+  animation-delay: 0;
+  animation-direction: alternate;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+}
+
+@keyframes landToWater {
+  0% {
+    transform: scale(0.6);
+    background-color:  #87d068;
+  }
+
+  50% {
+    transform: scale(1.2);
+    background-color: rgb(255, 254, 106);
+  }
+
+  100% {
+    transform: scale(1);
+    background-color: #108ee9
+  }
+}
+
+@keyframes waterToLand {
+  0% {
+    transform: scale(0.6);
+    background-color: #108ee9;
+  }
+
+  50% {
+    transform: scale(1.2);
+    background-color: rgb(255, 254, 106);
+  }
+
+  100% {
+    transform: scale(1);
+    background-color:  #87d068;
+  }
+}
