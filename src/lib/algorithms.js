@@ -33,6 +33,8 @@ export function countIsland(grid) {
     return 0
   }
 
+  console.log(JSON.stringify(grid))
+
   let numOfIslands = 0;
   let m = grid.length, n = grid[m-1].length;
   const visitedCells = Array.from(grid, () => new Array(n).fill(false));
