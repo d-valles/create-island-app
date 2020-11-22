@@ -1,4 +1,50 @@
-# Getting Started with Create React App
+## Create-Island-App
+
+Tiny World is an app that let you create your world by toggling multiple cells from ocean to land and vice versa.
+
+### Technical Requirements
+
+-[x] Tiny world is represented as a grid with width and height.
+-[x] The grid is divided into cells.
+-[x] Cells have two states, empty or filled (water or land).
+-[x] Cells are togglable between states
+-[x] Grid loads in all empty state
+-[x] User can control with and height of the grid.
+-[ ] The grid handles dimension changes without changing the state modified by the user.
+-[x] App has a display of the number of cells that are filled to the user.
+-[x] App has a display of the number of Islands. An Island is cells connected with the X or Y-axis.
+-[x] The app is tested.
+-[x] The app is responsive.
+-[x] App has the ability to turn dark and light theme. (Only header, TODO components)
+
+### Design assumptions and architecture
+
+### Folder Structure
+
+### Components
+
+### Data Structures
+
+### UI/UX
+
+This app is engaging and informative; methods used:
+    - Visual representation: The app displays text and graphs illustrations to display thactual status of the map.
+    - Pointer: Cursor is changed when the user hovers the grid. This is to inform it is clickable.
+    - Animations: When the user toggles a cell, it has a transition animation to involve and notify the user.
+
+
+### Third-Party Libraries
+
+[Enzyme](https://github.com/enzymejs/enzyme) Used for testing components.
+[Lodash] (https://lodash.com/): Used for throttling and memoization functions. (TODO)
+[Ant-Design](https://ant.design/): Used for responsive development, icons, and custom components.
+[Prop-Types](https://www.npmjs.com/package/prop-types): Used for type checking and a way to explain and document props.
+
+### Lessons learn, what can be improved
+
+---
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
