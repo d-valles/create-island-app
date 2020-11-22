@@ -5,6 +5,7 @@ import {
   Card,
   InputNumber,
   Space } from 'antd'
+import PropTypes from 'prop-types'
 
 export default class Controls extends React.Component {
   constructor(props) {
@@ -63,4 +64,8 @@ export default class Controls extends React.Component {
       </Card>
     )
   }
+}
+
+Controls.propTypes = {
+  OnUpdate: PropTypes.func.isRequired,
 }
