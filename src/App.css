@@ -3,3 +3,12 @@
 .App {
   text-align: center;
 }
+
+.dark-bg {
+  background: rgb(36, 40, 42);
+  color: white;
+}
+
+.dark-text {
+  color: white;
+}

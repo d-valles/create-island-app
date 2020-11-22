@@ -1,9 +1,8 @@
 import React from 'react'
-import { Typography } from 'antd';
+import { Card } from 'antd';
 import Cell from './components/Cell/Cell'
 import './Grid.css'
-
-const { Title } = Typography;
+import PropTypes from 'prop-types'
 
 export default class Grid extends React.Component {
   constructor(props) {
@@ -88,8 +87,7 @@ export default class Grid extends React.Component {
   render() {
     const { grid } = this.state;
     return (
-      <div className="grid-container">
-        <Title level={4}>Map</Title>
+      <Card title='Map'>
         <div className="grid"> 
         {
           grid.map((row, rowId) => {
@@ -117,7 +115,13 @@ export default class Grid extends React.Component {
           })
         }
         </div>
-      </div>
+      </Card>
     )
   }
+}
+
+Grid.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  gridHeight: PropTypes.number.isRequired,
+  gridWidth:PropTypes.number.isRequired,
 }

@@ -1,0 +1,12 @@
+.stats-list {
+  padding: 1%;
+  margin: 1%;
+}
+
+.stats-icon {
+  float: left;
+}
+
+.stats-container {
+  padding: 5%;
+}

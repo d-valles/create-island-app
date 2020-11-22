@@ -2,10 +2,22 @@ import React from 'react'
 import { 
   Button,
   Card,
-  List,
   Progress, 
   Space } from 'antd'
-  import { InfoCircleFilled } from '@ant-design/icons'
+import { InfoCircleFilled } from '@ant-design/icons'
+import PropTypes from 'prop-types'
+import './Stats.css'
+
+function StatsList({text, val, colorOfIcon}) {
+  return (
+    <div className='stats-list'>
+      <div>
+        <InfoCircleFilled className='stats-icon ' style={{color: colorOfIcon}}/>
+        <span>{text} {val}</span>
+      </div>
+    </div>
+  )
+}
 
 export default class Stats extends React.Component {
   render() {
@@ -31,35 +43,42 @@ export default class Stats extends React.Component {
             strokeColor="#87d068"
             format={percent => `${percent} %`}>
           </Progress>
-          <Progress 
-            type="circle" 
-            status="active" 
-            percent={numOfIsland} 
-            width={80} 
-            strokeColor="#8B4513"
-            format={percent => `${percent} Islands`}>
-          </Progress>
         </Space>
-        <List>
-          <List.Item>
-            <InfoCircleFilled style={{color: '#108ee9'}}/>
-            Number of water cells: {numOfWater}
-          </List.Item>
-          <List.Item>
-            <InfoCircleFilled style={{color: '#87d068'}}/>
-            Number of land cells: {numOfLand}
-          </List.Item>
-          <List.Item>
-            <InfoCircleFilled style={{color: '#8B4513'}}/>
-            Total number of Islands: {numOfIsland}
-          </List.Item>
-          <List.Item>
-            <InfoCircleFilled />
-            Total number of cells: {totalNumOfCells}
-          </List.Item>
-        </List>
+        <div className="stats-container">
+          <StatsList
+            text='Number of water cells:'
+            val={numOfWater}
+            colorOfIcon='#108ee9'
+            >
+          </StatsList>
+          <StatsList
+            text='Number of land cells:'
+            val={numOfLand}
+            colorOfIcon='#87d068'
+            >
+          </StatsList>
+          <StatsList
+            text='Number of Islands:'
+            val={numOfIsland}
+            colorOfIcon='#8B4513'
+            >
+          </StatsList>
+          <StatsList
+            text='Total number of cells:'
+            val={totalNumOfCells}
+            colorOfIcon='black'
+            >
+          </StatsList>
+        </div>
         <Button type="primary" onClick={OnUpdate}>Count</Button>
       </Card>
     )
   }
+}
+
+Stats.propTypes = {
+  OnUpdate: PropTypes.func.isRequired,
+  numOfIsland: PropTypes.number.isRequired,
+  numOfLand: PropTypes.number.isRequired,
+  numOfWater: PropTypes.number.isRequired,
 }

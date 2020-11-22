@@ -95,25 +95,27 @@ export default class IslandGame extends React.Component {
           <Content style={{ padding: ' 50px' }}>
             <Row>
               <Col flex="auto">
-                <Grid
-                  onChange={(grid) => this.handleGridChange(grid)}
-                  gridHeight={gridHeight}
-                  gridWidth={gridWidth}>
-                </Grid>
-              </Col>
-              <Col flex="none">
                 <Space direction="vertical">
-                    <Stats
-                      numOfIsland={numOfIsland}
-                      numOfLand={numOfLand}
-                      numOfWater={numOfWater}
-                      OnUpdate={() => this.handleStatsChange()}
-                      >
-                    </Stats>
-                    <Controls
-                      OnUpdate={(height, width) => this.handleGridChanges(height, width)}
+                  <Grid
+                    onChange={(grid) => this.handleGridChange(grid)}
+                    gridHeight={gridHeight}
+                    gridWidth={gridWidth}>
+                  </Grid>
+                </Space>
+              </Col>
+              <Col flex="auto">
+                <Space direction="vertical">
+                  <Stats
+                    numOfIsland={numOfIsland}
+                    numOfLand={numOfLand}
+                    numOfWater={numOfWater}
+                    OnUpdate={() => this.handleStatsChange()}
                     >
-                    </Controls>
+                  </Stats>
+                  <Controls
+                    OnUpdate={(height, width) => this.handleGridChanges(height, width)}
+                  >
+                  </Controls>
                 </Space>
               </Col>
             </Row>

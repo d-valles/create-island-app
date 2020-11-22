@@ -1,0 +1,9 @@
+.dark {
+  background: rgb(36, 40, 42);
+  color: white;
+}
+
+.theme-button {
+  float: right;
+  margin-right: 10%;
+}
