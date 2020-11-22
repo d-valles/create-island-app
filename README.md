@@ -17,7 +17,34 @@ Tiny World is an app that let you create your world by toggling multiple cells f
 - [x] The app is responsive.
 - [x] App has the ability to turn dark and light theme. (Only header, TODO components)
 
-### Folder Structure
+### Preview of folder structure.
+
+```bash
+└── src
+    ├── context
+    │   └── themeContext.js
+    │
+    ├── lib
+    │    ├── constants.js
+    │    └── algorithms.js
+    └── sections
+        ├── AppHeader
+        └── IslandApp
+            ├── components
+            ├── IslandApp.js
+            ├── IslandApp.css
+            ├── IslandApp.test.js
+
+```
+* This is a preview of the folder structure. The app has more components but, they follow the same structure, of react component, style, and test.
+* Some folders have a .test.js file with relevant tests.
+
+* Context: holds the configuration use context api, only used to toggle between different themes.
+* Lib: holds the algorithm, which are used to count the number of cells and islands.
+* Constants: holds data for testing purposes.
+* Sections: holds the main components that are rendered in the app. AppHeader and IslandApp which holds the main logic.
+    * * Inside the main components we have a component file that holds components relevant to that specific class.
+
 
 ### Design assumptions and architecture
 
@@ -38,13 +65,10 @@ This app is engaging and informative; methods used:
 
 ### Third-Party Libraries
 
-[Enzyme](https://github.com/enzymejs/enzyme) Used for testing components.
-
-[Lodash] (https://lodash.com/): Used for throttling and memoization functions. (TODO)
-
-[Ant-Design](https://ant.design/): Used for responsive development, icons, and custom components.
-
-[Prop-Types](https://www.npmjs.com/package/prop-types): Used for type checking and a way to explain and document props.
+* [Enzyme](https://github.com/enzymejs/enzyme) Used for testing components.
+* [Lodash](https://lodash.com/): Used for throttling and memoization functions. (TODO)
+* [Ant-Design](https://ant.design/): Used for responsive development, icons, and custom components.
+* [Prop-Types](https://www.npmjs.com/package/prop-types): Used for type checking and a way to explain and document props.
 
 ### Lessons learn, what can be improved
 
