@@ -52,6 +52,30 @@ Tiny World is an app that let you create your world by toggling multiple cells f
 
 ### Data Structures
 
+### Performance
+
+#### Algorithms:
+* count: Complexity: time O(N) and space O(1). The function iterates the grid counting each cell and generating, adding two variables: the number of water cells and land cells seen so far. It returns an object with the two variables.
+
+* countIsland: Complexity: time O(N) and space O(N). The function has two helper functions: *isValid* and *exploreIsland*. CountIsland iterates the grid looking for a filled cell; when found, it triggers *exploreIsland*, which calls recursively and groups all the cells into an Island. By having an array of the visited cells, we know when to stop the recursive calls.
+
+```javascript
+  let exploreIsland = (row, col) => {
+    if (!isValidCell(row, col)) return;
+    if (!grid[row] || !grid[row][col]) return;
+    if (grid[row][col].isEmpty === true) return;
+    if (visitedCells[row][col] === true) return;
+    
+    visitedCells[row][col] = true;
+    exploreIsland(row + 1, col);
+    exploreIsland(row, col + 1);
+    exploreIsland(row - 1, col);
+    exploreIsland(row, col - 1);
+  }
+```
+
+#### Render Loop: (TODO)
+
 ### UI/UX
 
 This app is engaging and informative; methods used:
