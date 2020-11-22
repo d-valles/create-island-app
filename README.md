@@ -9,7 +9,7 @@ Tiny World is an app that let you create your world by toggling multiple cells f
 - [x] Cells have two states, empty or filled (water or land).
 - [x] Cells are togglable between states.
 - [x] Grid loads in all empty state.
-- [x] User can control with and height of the grid.
+- [x] User can control width and height of the grid.
 - [x] The grid handles dimension changes without changing the state modified by the user.
 - [x] App has a display of the number of cells that are filled to the user.
 - [x] App has a display of the number of Islands. An Island is cells connected with the X or Y-axis.
@@ -43,14 +43,43 @@ Tiny World is an app that let you create your world by toggling multiple cells f
 * Lib: holds the algorithm, which are used to count the number of cells and islands.
 * Constants: holds data for testing purposes.
 * Sections: holds the main components that are rendered in the app. AppHeader and IslandApp which holds the main logic.
-    * * Inside the main components we have a component file that holds components relevant to that specific class.
+    * Inside the main components we have a component file that holds components relevant to that specific class.
 
 
 ### Design assumptions and architecture
 
+**Displaying Stats**: I could think of two ways of rendering the grid, and handling events. The first one is to update and run the algorithms of counting using a button and run only once when clicked. The second is to use a throttle function to update the stats each 'x seconds'. (TODO)
+
+**Displaying grid changes**: To handle the cell stats, I started updating the state when toggled, but looking to upgrade this, I felt a debounce function could work here. Updating the grid's state, but only send it to the Main component when the user finished clicking. (TODO)
+
+ **Control Options**: I decided to limit the number of rows and columns the user could add. Min value = 1, max Value = 20.
+
 ### Components
 
-### Data Structures
+* AppHeader: Contains the logic to render the title and toggle the theme button.
+* IslandGame: Contains the state logic and methods that render the grid, stats, and controls.
+* Controls: Contains the dimension control to update the Island Game state of the grid.
+* Stats: Renders the status of the grid, the numbers of filled and empty cells, also in percentages. It additionally displays the number of Islands.
+* Grid: Receives the dimensions of the grid and renders the number of cells needed.
+* Cell: Renders the individual cell, has a row, col, isEmpty, and function to handle state changes in a parent's context.
+
+Grid Data-Structure: each object is a cell.
+
+```javascript
+[
+    [
+        {"isEmpty":true,"col":0,"row":0},
+        {"isEmpty":false,"col":1,"row":0}]
+    ]
+    [
+        ...
+    ]
+    ...
+]
+```
+
+In a project with Typescript we can create interfaces to explicilty typed the Grid and Cell structure.
+
 
 ### Performance
 
@@ -78,19 +107,18 @@ Tiny World is an app that let you create your world by toggling multiple cells f
 
 ### UI/UX
 
-This app is engaging and informative; methods used:
+To make the app engaging and informative I used the following methods:
 
-* Visual representation: The app displays text and graphs illustrations to display thactual status of the map.
+* Visual representation: The app displays text and graphs illustrations to display the actual status of the map.
 
 * Pointer: Cursor is changed when the user hovers the grid. This is to inform it is clickable.
 
 * Animations: When the user toggles a cell, it has a transition animation to involve and notify the user.
 
-
 ### Third-Party Libraries
 
 * [Enzyme](https://github.com/enzymejs/enzyme) Used for testing components.
-* [Lodash](https://lodash.com/): Used for throttling and memoization functions. (TODO)
+* [Lodash](https://lodash.com/): Used for debounce, throttling and memoization functions. (TODO)
 * [Ant-Design](https://ant.design/): Used for responsive development, icons, and custom components.
 * [Prop-Types](https://www.npmjs.com/package/prop-types): Used for type checking and a way to explain and document props.
 
