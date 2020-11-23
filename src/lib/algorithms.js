@@ -56,8 +56,8 @@ export function countIsland(grid, maxRow, maxCol) {
     exploreIsland(row, col - 1);
   }
 
-  for (let row = 0; row < grid.length; row++) {
-    for (let col = 0; col < grid[row].length; col++) {
+  for (let row = 0; row < maxRow; row++) {
+    for (let col = 0; col < maxCol; col++) {
       let currentCell = grid[row][col];
       if (visitedCells[row][col] === false && currentCell.isEmpty === false) {
         numOfIslands++
