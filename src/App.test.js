@@ -1,6 +1,10 @@
+import { shallow } from 'enzyme';
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-it('renders learn react link', () => {
-  render(<App />);
-});
+describe('<App />', () => {
+  it('renders app', () => {
+    const wrapper = shallow(<App></App>);
+    expect(wrapper.find(App)).toHave
+  });
+})

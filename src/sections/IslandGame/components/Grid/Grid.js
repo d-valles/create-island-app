@@ -3,6 +3,7 @@ import { Card } from 'antd';
 import Cell from './components/Cell/Cell'
 import './Grid.css'
 import PropTypes from 'prop-types'
+import _ from 'lodash';
 
 export default class Grid extends React.Component {
   constructor(props) {
@@ -18,9 +19,8 @@ export default class Grid extends React.Component {
   }
 
   componentDidMount() {
-    const initialGrid = this.generateGrid();
     this.setState({
-      grid: initialGrid
+      grid: this.props.grid
     })
   }
 
@@ -39,16 +39,12 @@ export default class Grid extends React.Component {
   }
 
   generateGrid() {
-    const { gridHeight, gridWidth } = this.props;
+    const { grid, gridHeight, gridWidth } = this.props;
     let initialGrid = [];
     for (let row = 0; row < gridHeight; row++) {
       let initRow = [];
       for (let col = 0; col < gridWidth; col++) {
-        initRow.push({
-          isEmpty: true,
-          col,
-          row,
-        })
+        initRow.push(grid[row][col]);
       }
 
       initialGrid.push(initRow);
@@ -62,7 +58,8 @@ export default class Grid extends React.Component {
     this.setState({
       grid: newGrid
     })
-    this.props.onChange(this.state.grid)
+    
+    this.props.onChange(this.state.grid);
   }
 
   //TODO

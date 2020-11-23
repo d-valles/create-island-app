@@ -9,6 +9,8 @@ import Stats from './components/Stats/Stats'
 import Controls from './components/Controls/Controls'
 import './IslandGame.css'
 import { count, countIsland } from "../../lib/algorithms"
+import { defaultGrid, defaultHeight, defaultWidth} from "../../lib/constants"
+import _ from 'lodash';
 
 const { Content } = Layout;
 
@@ -17,78 +19,87 @@ export default class IslandGame extends React.Component {
     super(props)
 
     this.state = {
-      grid: [],
-      numOfWater: 100,
+      grid: defaultGrid,
+      numOfWater: 400,
       numOfLand: 0,
       numOfIsland: 0,
-      gridHeight: 10,
-      gridWidth: 10,
+      gridHeight: defaultHeight,
+      gridWidth: defaultWidth,
     }
 
-    this.handleGridChanges = this.handleGridChanges.bind(this);
+    this.handleGridChange = this.handleGridChange.bind(this)
+    this.handleDimensionChanges = this.handleDimensionChanges.bind(this);
     this.handleStatsChange = this.handleStatsChange.bind(this);
+    this.updateGrid = this.updateGrid.bind(this);
+    this.handleGridClear = this.handleGridClear.bind(this);
   }
 
   componentDidMount() {
-    this.updateGrid();
+    this.updateGrid(defaultGrid)
   }
 
-  updateGrid() {
-    const initialGrid = this.generateGrid();
-    this.setState({
-      grid: initialGrid
-    })
-  }
-
-  generateGrid() {
-    const { gridHeight, gridWidth } = this.state;
-    let initialGrid = [];
-    for (let row = 0; row < gridHeight; row++) {
-      let initRow = [];
-      for (let col = 0; col < gridWidth; col++) {
-        initRow.push({
-          isEmpty: true,
-          col,
-          row,
-        })
-      }
-      initialGrid.push(initRow);
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.gridHeight !== this.state.gridHeight
+        || prevState.gridWidth !== this.state.gridWidth) {
+          this.handleStatsChange(this.state.grid, this.state.gridHeight, this.state.gridWidth);
     }
+  }
 
+  updateGrid(newGrid) {
+    const updatedGrid = this.comparesAndUpdatesGrid(newGrid, this.state.gridHeight, this.state.gridWidth);
+    this.setState({
+      grid: updatedGrid
+    })
+    this.handleStatsChange(updatedGrid, this.state.gridHeight, this.state.gridWidth);
+  }
+
+  // Updates state grid with new grid from child component.
+  comparesAndUpdatesGrid(newGrid) {
+    let initialGrid = this.state.grid.slice()
+    for (let row = 0; row < newGrid.length; row++) {
+      for (let col = 0; col < newGrid[0].length; col++) {
+        initialGrid[row][col] = newGrid[row][col];
+      }
+    }
     return initialGrid;
   }
 
-  handleGridChanges(height, width) {
+  // Is triggered in controls
+  handleDimensionChanges(height, width) {
     this.setState({
       gridHeight: height,
       gridWidth: width
     })
-
-    this.updateGrid()
-
-    this.handleStatsChange();
+    this.handleStatsChange(this.state.grid, this.state.gridHeight, this.state.gridWidth);
   }
 
-  handleStatsChange() {
-    const grid = this.state.grid.slice();
-    const { numOfEmpty, numOfFill } = count(grid);
-    const newNumOfIsland = countIsland(grid)
+  // Runs algorithms and updates stats
+  handleStatsChange(grid, gridHeight, gridWidth) {
+    const { numOfEmpty, numOfFill } = count(grid, gridHeight, gridWidth);
+    const newNumOfIsland = countIsland(grid, gridHeight, gridWidth);
     this.setState({
       numOfLand: numOfFill,
       numOfWater: numOfEmpty,
       numOfIsland: newNumOfIsland,
-    })
-   }
-  
+    });
+  }
+
+   // Is triggered in grid
    handleGridChange(newGrid) {
-     this.setState({
-       grid: newGrid
-     })
+    this.updateGrid(newGrid);
+    this.handleStatsChange(this.state.grid, this.state.gridHeight, this.state.gridWidth);
+   }
+
+   //Is triggered in grid
+   handleGridClear() {
+    this.setState({
+      grid: defaultGrid
+    });
+    this.handleStatsChange(this.state.grid, defaultHeight, defaultWidth);
    }
 
   render() {
-    const { gridHeight, gridWidth, numOfIsland, numOfWater, numOfLand } = this.state;
-
+    const { grid, gridHeight, gridWidth, numOfIsland, numOfWater, numOfLand } = this.state;
     return (
       <React.Fragment>
         <Layout className="layout">
@@ -97,9 +108,10 @@ export default class IslandGame extends React.Component {
               <Col flex="auto">
                 <Space direction="vertical">
                   <Grid
-                    onChange={(grid) => this.handleGridChange(grid)}
+                    onChange={_.debounce((grid) => this.handleGridChange(grid), 1000)}
                     gridHeight={gridHeight}
-                    gridWidth={gridWidth}>
+                    gridWidth={gridWidth}
+                    grid={grid}>
                   </Grid>
                 </Space>
               </Col>
@@ -109,11 +121,13 @@ export default class IslandGame extends React.Component {
                     numOfIsland={numOfIsland}
                     numOfLand={numOfLand}
                     numOfWater={numOfWater}
-                    OnUpdate={() => this.handleStatsChange()}
                     >
                   </Stats>
                   <Controls
-                    OnUpdate={(height, width) => this.handleGridChanges(height, width)}
+                    gridHeight={gridHeight}
+                    gridWidth={gridWidth}
+                    OnUpdate={(height, width) => this.handleDimensionChanges(height, width)}
+                    OnClear={() => this.handleGridClear()}
                   >
                   </Controls>
                 </Space>

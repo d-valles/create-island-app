@@ -1,6 +1,5 @@
 import React from 'react'
 import { 
-  Button,
   Card,
   Progress, 
   Space } from 'antd'
@@ -20,12 +19,16 @@ function StatsList({text, val, colorOfIcon}) {
 }
 
 export default class Stats extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+
   render() {
-    let { OnUpdate, numOfIsland, numOfLand, numOfWater } = this.props;
+    let { numOfIsland, numOfLand, numOfWater } = this.props;
     let totalNumOfCells = numOfWater + numOfLand;
 
     return (
-      <Card title="Stats">
+      <Card title="World in cells">
         <Space>
           <Progress 
             type="circle" 
@@ -70,14 +73,12 @@ export default class Stats extends React.Component {
             >
           </StatsList>
         </div>
-        <Button type="primary" onClick={OnUpdate}>Count</Button>
       </Card>
     )
   }
 }
 
 Stats.propTypes = {
-  OnUpdate: PropTypes.func.isRequired,
   numOfIsland: PropTypes.number.isRequired,
   numOfLand: PropTypes.number.isRequired,
   numOfWater: PropTypes.number.isRequired,

@@ -46,11 +46,11 @@ Tiny World is an app that let you create your world by toggling multiple cells f
     * Inside the main components we have a component file that holds components relevant to that specific class.
 
 
-### Design assumptions and architecture
+### Design and architecture
 
-**Displaying Stats**: I could think of two ways of rendering the grid, and handling events. The first one is to update and run the algorithms of counting using a button and run only once when clicked. The second is to use a throttle function to update the stats each 'x seconds'. (TODO)
+**Displaying Stats**: I could think of two ways of rendering the grid, and handling events. The first one is to update and run the algorithms of counting using a button and run only once when clicked. The second is to use a debounce function to update the stats each '1 seconds'.
 
-**Displaying grid changes**: To handle the cell stats, I started updating the state when toggled, but looking to upgrade this, I felt a debounce function could work here. Updating the grid's state, but only send it to the Main component when the user finished clicking. (TODO)
+**Displaying grid changes**: To handle the cell stats, I started updating the state when toggled, but looking to upgrade this, I felt a debounce function could work here. Updating the grid's state, but only send it to the Main component when the user finished clicking.
 
  **Control Options**: I decided to limit the number of rows and columns the user could add. Min value = 1, max Value = 20.
 
@@ -82,6 +82,13 @@ In a project with Typescript we can create interfaces to explicilty typed the Gr
 
 
 ### Performance
+
+Instead of updating the grid state of the IslandGame component each time we click a cell, we bulk the state in the Grid component and use a debounce function to only update once each second.
+
+Grid Component
+```javascript
+onChange={_.debounce((grid) => this.handleGridChange(grid), 1000)}
+```
 
 #### Algorithms:
 * count: Complexity: time O(N) and space O(1). The function iterates the grid counting each cell and generating, adding two variables: the number of water cells and land cells seen so far. It returns an object with the two variables.

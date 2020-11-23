@@ -12,17 +12,25 @@ export default class Controls extends React.Component {
     super(props)
 
     this.state = {
-      width: 10,
-      height: 10,
+      width: this.props.gridWidth,
+      height: this.props.gridHeight,
     }
 
     this.handleHeightChange = this.handleHeightChange.bind(this);
     this.handleWidthChange = this.handleWidthChange.bind(this);
     this.handleUpdate = this.handleUpdate.bind(this);
+    this.handleClear = this.handleClear.bind(this);
   }
 
   handleUpdate() {
-    this.props.OnUpdate(this.state.height, this.state.width)
+    if (this.props.gridHeight !== this.state.height
+        || this.props.gridWidth !== this.state.width) {
+          this.props.OnUpdate(this.state.height, this.state.width)
+        }
+  }
+
+  handleClear() {
+    this.props.OnClear()
   }
 
   handleWidthChange(newWidth) {
@@ -39,7 +47,7 @@ export default class Controls extends React.Component {
   
   render() {
     return (
-      <Card title="Options">
+      <Card title="Configure your world">
         <Space>
           # Rows
           <InputNumber 
@@ -60,12 +68,15 @@ export default class Controls extends React.Component {
           <Button type="primary" onClick={this.handleUpdate}>Apply</Button>
         </Space>
         <Divider></Divider>
-        <Button type="primary" danger>Delete land cells</Button>
+        <Button type="primary" onClick={this.handleClear} danger>New map</Button>
       </Card>
     )
   }
 }
 
 Controls.propTypes = {
+  gridHeight: PropTypes.number.isRequired,
+  gridWidth: PropTypes.number.isRequired,
   OnUpdate: PropTypes.func.isRequired,
+  OnClear: PropTypes.func.isRequired,
 }

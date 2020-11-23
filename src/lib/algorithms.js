@@ -1,16 +1,16 @@
-export function count(grid) {
+export function count(grid, maxRow, maxCol) {
   let numOfEmpty = 0, numOfFill = 0;
 
   // If grid is empty defaults to 0.
-  if (!grid || !grid.length) {
+  if (!grid || !grid.length || !maxRow || !maxCol) {
     return {
       numOfEmpty,
       numOfFill
     }
   }
 
-  for (let row = 0; row < grid.length; row++) {
-    for (let col = 0; col < grid[row].length; col++) {
+  for (let row = 0; row < maxRow; row++) {
+    for (let col = 0; col < maxCol; col++) {
       let currentCell = grid[row][col];
 
       if (currentCell.isEmpty) {
@@ -27,14 +27,14 @@ export function count(grid) {
   }
 }
 
-export function countIsland(grid) {
+export function countIsland(grid, maxRow, maxCol) {
   // If grid is empty defaults to 0.
-  if (!grid || !grid.length) {
+  if (!grid || !grid.length || !maxRow || !maxCol) {
     return 0
   }
 
   let numOfIslands = 0;
-  let m = grid.length, n = grid[m-1].length;
+  let m = maxRow, n = maxCol;
   const visitedCells = Array.from(grid, () => new Array(n).fill(false));
 
   let isValidCell = (row, col) => {
