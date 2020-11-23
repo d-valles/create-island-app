@@ -155,7 +155,7 @@ To make the app engaging and informative I used the following methods:
 
 ### Lessons learn, what can be improved
 
-Flow of data: If I started again, I would consider using a library like Redux to handle a global state, even using the context API (I did the theme context, as a experiment, it was my first time suing it). Still, I wanted to use higher-order functions and execute them in a different context, but this might be difficult to maintain as the app gets bigger.
+Flow of data: If I started again, I would consider using a library like Redux to handle a global state, even using the context API (I did the theme context, as a experiment, it was my first time using it). Still, I wanted to use higher-order functions and execute them in a different context, but this might be difficult to maintain as the app gets bigger.
 
 Typed Components: When the codebase starts to get bigger and new people to come into the project, typed libraries like Typescript are helpful as documentation and descriptive for classes, objects, and functions.
 
