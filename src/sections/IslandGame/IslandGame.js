@@ -25,6 +25,7 @@ export default class IslandGame extends React.Component {
       numOfIsland: 0,
       gridHeight: defaultHeight,
       gridWidth: defaultWidth,
+      restart: false,
     }
 
     this.handleGridChange = this.handleGridChange.bind(this)
@@ -70,7 +71,6 @@ export default class IslandGame extends React.Component {
       gridHeight: height,
       gridWidth: width
     })
-    this.handleStatsChange(this.state.grid, this.state.gridHeight, this.state.gridWidth);
   }
 
   // Runs algorithms and updates stats
@@ -84,22 +84,17 @@ export default class IslandGame extends React.Component {
     });
   }
 
-   // Is triggered in grid
    handleGridChange(newGrid) {
     this.updateGrid(newGrid);
     this.handleStatsChange(this.state.grid, this.state.gridHeight, this.state.gridWidth);
    }
 
-   //Is triggered in grid
+   // TODO
    handleGridClear() {
-    this.setState({
-      grid: defaultGrid
-    });
-    this.handleStatsChange(this.state.grid, defaultHeight, defaultWidth);
    }
 
   render() {
-    const { grid, gridHeight, gridWidth, numOfIsland, numOfWater, numOfLand } = this.state;
+    const { grid, gridHeight, gridWidth, numOfIsland, numOfWater, numOfLand, restart } = this.state;
     return (
       <React.Fragment>
         <Layout className="layout">
@@ -111,7 +106,8 @@ export default class IslandGame extends React.Component {
                     onChange={_.debounce((grid) => this.handleGridChange(grid), 1000)}
                     gridHeight={gridHeight}
                     gridWidth={gridWidth}
-                    grid={grid}>
+                    grid={grid}
+                    restart={restart}>
                   </Grid>
                 </Space>
               </Col>

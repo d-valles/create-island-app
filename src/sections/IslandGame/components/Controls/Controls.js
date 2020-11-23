@@ -1,11 +1,12 @@
 import React from 'react'
 import { 
   Button,
-  Divider,
+  // Divider,
   Card,
   InputNumber,
   Space } from 'antd'
 import PropTypes from 'prop-types'
+import { defaultHeight, defaultWidth} from "../../../../lib/constants"
 
 export default class Controls extends React.Component {
   constructor(props) {
@@ -25,24 +26,28 @@ export default class Controls extends React.Component {
   handleUpdate() {
     if (this.props.gridHeight !== this.state.height
         || this.props.gridWidth !== this.state.width) {
-          this.props.OnUpdate(this.state.height, this.state.width)
-        }
+          this.props.OnUpdate(this.state.height, this.state.width);
+    }
   }
 
   handleClear() {
-    this.props.OnClear()
+    this.setState({
+      height: defaultHeight,
+      width: defaultWidth 
+    });
+    this.props.OnClear();
   }
 
   handleWidthChange(newWidth) {
     this.setState({
       width: newWidth
-    })
+    });
   }
 
   handleHeightChange(newHeight) {
     this.setState({
       height: newHeight
-    })
+    });
   }
   
   render() {
@@ -67,8 +72,13 @@ export default class Controls extends React.Component {
           </InputNumber>
           <Button type="primary" onClick={this.handleUpdate}>Apply</Button>
         </Space>
-        <Divider></Divider>
-        <Button type="primary" onClick={this.handleClear} danger>New map</Button>
+        {
+          /*
+          TODO
+          <Divider></Divider>
+          <Button type="primary" onClick={this.handleClear} danger>New map</Button>
+          */
+        }
       </Card>
     )
   }

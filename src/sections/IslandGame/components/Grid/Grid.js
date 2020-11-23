@@ -3,7 +3,7 @@ import { Card } from 'antd';
 import Cell from './components/Cell/Cell'
 import './Grid.css'
 import PropTypes from 'prop-types'
-import _ from 'lodash';
+import { defaultGrid } from "../../../../lib/constants"
 
 export default class Grid extends React.Component {
   constructor(props) {
@@ -31,11 +31,11 @@ export default class Grid extends React.Component {
     }
   }
 
-  updateAndNotify = () => {
+  updateAndNotify() {
     const initialGrid = this.generateGrid();
     this.setState({
       grid: initialGrid
-    })
+    });
   }
 
   generateGrid() {
@@ -120,5 +120,6 @@ export default class Grid extends React.Component {
 Grid.propTypes = {
   onChange: PropTypes.func.isRequired,
   gridHeight: PropTypes.number.isRequired,
-  gridWidth:PropTypes.number.isRequired,
+  gridWidth: PropTypes.number.isRequired,
+  restart: PropTypes.bool,
 }

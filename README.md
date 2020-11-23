@@ -16,6 +16,7 @@ Tiny World is an app that let you create your world by toggling multiple cells f
 - [x] The app is tested.
 - [x] The app is responsive.
 - [x] App has the ability to turn dark and light theme. (Only header, TODO components)
+- [ ] Restart button (Didn't finish)
 
 ### Preview of folder structure.
 
@@ -83,12 +84,6 @@ In a project with Typescript we can create interfaces to explicilty typed the Gr
 
 ### Performance
 
-Instead of updating the grid state of the IslandGame component each time we click a cell, we bulk the state in the Grid component and use a debounce function to only update once each second.
-
-Grid Component
-```javascript
-onChange={_.debounce((grid) => this.handleGridChange(grid), 1000)}
-```
 
 #### Algorithms:
 * count: Complexity: time O(N) and space O(1). The function iterates the grid counting each cell and generating, adding two variables: the number of water cells and land cells seen so far. It returns an object with the two variables.
@@ -110,7 +105,36 @@ onChange={_.debounce((grid) => this.handleGridChange(grid), 1000)}
   }
 ```
 
-#### Render Loop: (TODO)
+#### Render Loop:
+
+The grid is compared and updated in the comparesAndUpdatesGrid function. We only update cells within the gridHeight and gridWidth limits. Then HandleStatsChanges is in charge of calling the algorithms functions and updating the state with the result.
+
+```javascript
+  updateGrid(newGrid) {
+    const updatedGrid = this.comparesAndUpdatesGrid(newGrid, this.state.gridHeight, this.state.gridWidth);
+    this.setState({
+      grid: updatedGrid
+    })
+    this.handleStatsChange(updatedGrid, this.state.gridHeight, this.state.gridWidth);
+  }
+
+  comparesAndUpdatesGrid(newGrid) {
+    let initialGrid = this.state.grid.slice()
+    for (let row = 0; row < newGrid.length; row++) {
+      for (let col = 0; col < newGrid[0].length; col++) {
+        initialGrid[row][col] = newGrid[row][col];
+      }
+    }
+    return initialGrid;
+  }
+```
+
+Instead of updating the grid state of the IslandGame component each time we click a cell, we bulk the state in the Grid component and use a debounce function to only update once each second.
+
+Grid Component
+```javascript
+onChange={_.debounce((grid) => this.handleGridChange(grid), 1000)}
+```
 
 ### UI/UX
 
@@ -130,6 +154,13 @@ To make the app engaging and informative I used the following methods:
 * [Prop-Types](https://www.npmjs.com/package/prop-types): Used for type checking and a way to explain and document props.
 
 ### Lessons learn, what can be improved
+
+Flow of data: If I started again, I would consider using a library like Redux to handle a global state, even using the context API (I did the theme context, as a experiment, it was my first time suing it). Still, I wanted to use higher-order functions and execute them in a different context, but this might be difficult to maintain as the app gets bigger.
+
+Typed Components: When the codebase starts to get bigger and new people to come into the project, typed libraries like Typescript are helpful as documentation and descriptive for classes, objects, and functions.
+
+Tests:
+Testing with a new framework is challenging. It was my first time using jest and enzyme. I would probably need more time to make a full test suite that has good coverage. I missed some component methods because I wasn't familiar with how to test the specific functionality.
 
 ---
 
